@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $fillable = [
-        'title', 'description'
+        'title', 'description', 'owner_id'
     ];
 
     //protected $guarded = [];
