@@ -28,7 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $gate->before(function ($user) {
-            return $user->id == 2; // to check the role or is_admin before anything is executed
+            if ($user->id == 2) { // to check the role or is_admin before anything is executed
+                return true;
+            }
         });
     
     }

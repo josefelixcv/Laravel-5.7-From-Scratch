@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Mail\ProjectCreated;
 
 class ProjectsController extends Controller
 {
@@ -76,7 +77,7 @@ class ProjectsController extends Controller
 
        // Project::create(request(['title', 'description']));
         
-        Project::create($attributes);
+        $project = Project::create($attributes);
 
         // Project::create(request()->all());
 
@@ -87,6 +88,11 @@ class ProjectsController extends Controller
         $project->description = request('description');
         
         $project->save();*/
+
+
+        \Mail::to('josefelixcv@gmail.com')->send(
+            new ProjectCreated($project)
+        );        
 
         return redirect('/projects');
     }
