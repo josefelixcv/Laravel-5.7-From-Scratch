@@ -92,7 +92,7 @@ class ProjectsController extends Controller
         $project->save();*/
 
 
-        \Mail::to('josefelixcv@gmail.com')->send(
+       \Mail::to($project->owner->email)->send(
             new ProjectCreated($project)
         );        
 
