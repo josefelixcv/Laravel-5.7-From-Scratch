@@ -33,4 +33,8 @@ class User extends Authenticatable
     public function owns(Project $project) {
         return $this->id == $project->owner_id;
     }
+
+    public function projects() {
+        return $this->hasMany(Project::class, 'owner_id'); // selects * from projects where the owner_id = $id
+    }
 }

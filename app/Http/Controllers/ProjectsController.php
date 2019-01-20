@@ -23,8 +23,8 @@ class ProjectsController extends Controller
             auth()->check(); // boolean
             if (auth()->guest())
             */
-        $projects = Project::where('owner_id', auth()->id())->get();
-
+        // $projects = Project::where('owner_id', auth()->id())->get();
+        $projects = auth()->user()->projects;
         return view('projects.index', compact('projects'));
     }
 
@@ -68,10 +68,12 @@ class ProjectsController extends Controller
             ])
         );*/
 
-        $attributes = request()->validate([
+        /*$attributes = request()->validate([
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3']
-        ]);
+        ]);*/
+
+        $attributes = $this->validateProject();
 
         $attributes['owner_id'] = auth()->id();
 
@@ -101,8 +103,18 @@ class ProjectsController extends Controller
         return view('projects.edit', compact('project'));
     }
 
+    protected function validateProject() {
+        return request()->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3']
+        ]);
+    
+    }
+    
+
     public function update(Project $project) {
-        $project->update(request(['title', 'description']));
+        //$project->update(request(['title', 'description']));
+        $project->update($this->validateProject());
         return redirect('/projects');
     }
 
