@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProjectCreated;
 
 class Project extends Model
 {
@@ -11,6 +13,18 @@ class Project extends Model
     ];
 
     //protected $guarded = [];
+
+    protected static function boot() {
+        parent::boot();
+        //created updated deleted
+        static::created(function ($project) {
+    
+            Mail::to($project->owner->email)->send(
+                new ProjectCreated($project)
+            );
+    
+        });
+    }   
 
 
     public function tasks() {

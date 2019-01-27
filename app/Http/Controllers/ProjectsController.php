@@ -79,7 +79,7 @@ class ProjectsController extends Controller
 
        // Project::create(request(['title', 'description']));
         
-        $project = Project::create($attributes);
+        Project::create($attributes);
 
         // Project::create(request()->all());
 
@@ -89,12 +89,7 @@ class ProjectsController extends Controller
         $project->title = request('title');
         $project->description = request('description');
         
-        $project->save();*/
-
-
-       \Mail::to($project->owner->email)->send(
-            new ProjectCreated($project)
-        );        
+        $project->save();*/       
 
         return redirect('/projects');
     }
