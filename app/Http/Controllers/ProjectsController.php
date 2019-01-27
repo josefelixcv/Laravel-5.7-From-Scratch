@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
-use App\Mail\ProjectCreated;
+use App\Events\ProjectCreated;
 
 class ProjectsController extends Controller
 {
@@ -79,7 +79,9 @@ class ProjectsController extends Controller
 
        // Project::create(request(['title', 'description']));
         
-        Project::create($attributes);
+        $project = Project::create($attributes);
+
+        event(new ProjectCreated($project));
 
         // Project::create(request()->all());
 

@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Events\ProjectCreated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ProjectCreated;
+//use Illuminate\Support\Facades\Mail;
+//use App\Mail\ProjectCreated;
 
 class Project extends Model
 {
@@ -12,9 +13,14 @@ class Project extends Model
         'title', 'description', 'owner_id'
     ];
 
+    protected $dispatchesEvents = [
+        'created' => ProjectCreated::class
+    ];
+    
+
     //protected $guarded = [];
 
-    protected static function boot() {
+    /*protected static function boot() {
         parent::boot();
         //created updated deleted
         static::created(function ($project) {
@@ -24,7 +30,7 @@ class Project extends Model
             );
     
         });
-    }   
+    } */  
 
 
     public function tasks() {
