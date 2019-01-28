@@ -11,6 +11,8 @@
 |
 */
 
+use App\Notifications\SubscriptionRenewalFailed;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -38,3 +40,11 @@ Route::delete('/projects/{project}', 'ProjectsController@destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/notify', function() {
+	$user = App\User::first();
+	$user->notify(new SubscriptionRenewalFailed);
+	
+	return 'Done';
+});
+
